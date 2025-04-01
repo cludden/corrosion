@@ -1,0 +1,11 @@
+env:
+  RUSTUP_TOOLCHAIN: null
+
+up:
+  - rust: latest
+  - brew:
+      - zig
+  - github-release:
+      goreleaser/goreleaser: v2.8.2
+  - custom:
+      meet: rustup install nightly-2023-12-03
