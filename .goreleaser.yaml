@@ -51,38 +51,19 @@ release:
   replace_existing_artifacts: true
 
 dockers:
-  - id: corrosion-linux-amd64
-    use: buildx
+  - use: buildx
     dockerfile: Dockerfile
     image_templates:
-      - "cludden/corrosion:{{ .Version }}-linux-amd64"
+      - "cludden/corrosion:{{ .Version }}"
+      - "cludden/corrosion:latest"
     skip_push: false
     build_flag_templates:
-      - --build-arg=BINARY=dist/corrosion_x86_64-unknown-linux-gnu/corrosion
-      - --platform=linux/amd64
-    extra_files:
-      - dist/corrosion_x86_64-unknown-linux-gnu/corrosion
-      - entrypoint.sh
-
-  - id: corrosion-linux-arm64
-    use: buildx
-    dockerfile: Dockerfile
-    image_templates:
-      - "cludden/corrosion:{{ .Version }}-linux-arm64"
-    skip_push: false
-    build_flag_templates:
-      - --build-arg=BINARY=dist/corrosion_aarch64-unknown-linux-gnu/corrosion
-      - --platform=linux/arm64
+      - --platform=linux/amd64,linux/arm64
+  
     extra_files:
       - dist/corrosion_aarch64-unknown-linux-gnu/corrosion
+      - dist/corrosion_x86_64-unknown-linux-gnu/corrosion
       - entrypoint.sh
-
-docker_manifests:
-  - name_template: "cludden/corrosion:{{ .Version }}"
-    image_templates:
-      - "cludden/corrosion:{{ .Version }}-linux-amd64"
-      - "cludden/corrosion:{{ .Version }}-linux-arm64"
-    skip_push: false
 
 changelog:
   sort: asc
